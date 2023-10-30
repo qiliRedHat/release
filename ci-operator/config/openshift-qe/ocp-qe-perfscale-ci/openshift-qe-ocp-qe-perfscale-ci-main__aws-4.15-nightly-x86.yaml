@@ -96,9 +96,9 @@ tests:
 - always_run: false
   as: perfscale-aws-data-path-9nodes-periodic
   steps:
-    cluster_profile: aws-perfscale
+    cluster_profile: aws-perfscale-qe
     env:
-      BASE_DOMAIN: perfscale.devcluster.openshift.com
+      BASE_DOMAIN: qe.devcluster.openshift.com
       COMPUTE_NODE_REPLICAS: "9"
       COMPUTE_NODE_TYPE: m5.2xlarge
       LOKI_USE_SERVICEMONITOR: "false"
@@ -113,6 +113,16 @@ tests:
     - ref: openshift-qe-perfscale-aws-data-path-sg
     - chain: openshift-qe-data-path-tests
   timeout: 5h0m0s
+- as: perfscale-aws-ovn-ipsec-control-plane-120nodes-periodic
+  cron: 0 15 * * 2
+  steps:
+    cluster_profile: aws-perfscale
+    env:
+      BASE_DOMAIN: perfscale.devcluster.openshift.com
+    test:
+    - chain: create-infra-move-ingress-monitoring-registry
+    - chain: openshift-qe-control-plane
+    workflow: cucushift-installer-rehearse-aws-ipi-ovn-ipsec
 zz_generated_metadata:
   branch: main
   org: openshift-qe
