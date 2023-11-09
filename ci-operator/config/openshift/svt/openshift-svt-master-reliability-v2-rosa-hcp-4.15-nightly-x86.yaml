@@ -1,0 +1,43 @@
+build_root:
+  image_stream_tag:
+    name: ci-tools-build-root
+    namespace: ci
+    tag: latest
+images:
+- dockerfile_path: prow/Dockerfile
+  to: reliability-v2-rosa-hcp-4.15-nightly
+promotion:
+  namespace: ci
+  tag: latest
+releases:
+  latest:
+    candidate:
+      product: ocp
+      stream: nightly
+      version: "4.15"
+resources:
+  '*':
+    requests:
+      cpu: 100m
+      memory: 200Mi
+tests:
+- as: reliability-v2
+  cron: 0 17 * * 5
+  steps:
+    cluster_profile: aws-perfscale-qe
+    env:
+      CHANNEL_GROUP: nightly
+      COMPUTE_MACHINE_TYPE: m5.2xlarge
+      DISABLE_WORKLOAD_MONITORING: "false"
+      ENABLE_AUTOSCALING: "false"
+      HOSTED_CP: "true"
+      MULTI_AZ: "true"
+      OPENSHIFT_VERSION: "4.15"
+      READY_WAIT_TIMEOUT: 30m
+      REPLICAS: "23"
+      ZONES_COUNT: "3"
+      RELIABILITY_DURATION: "1h"
+    test:
+    - chain: openshift-svt-reliability-v2
+    workflow: rosa-aws-sts-hypershift
+  timeout: 8h0m0s

@@ -1,0 +1,22 @@
+ref:
+  as: openshift-svt-reliability-v2
+  from_image:
+    namespace: ci
+    name: ocp-qe-perfscale-ci
+    tag: latest
+  commands: openshift-svt-reliability-v2-commands.sh
+  credentials:
+  - namespace: test-credentials # this entry injects the custom credential
+    name: reliability-slack-api-token
+    mount_path: /token
+  env:
+  - name: RELIABILITY_DURATION
+    default: 1h
+    documentation: |-
+      The duration to run the reliability test
+  resources:
+    requests:
+      cpu: 100m
+      memory: 100Mi
+  documentation: >-
+    This step runs the openshift svt reliability-v2 test in the deployed cluster
