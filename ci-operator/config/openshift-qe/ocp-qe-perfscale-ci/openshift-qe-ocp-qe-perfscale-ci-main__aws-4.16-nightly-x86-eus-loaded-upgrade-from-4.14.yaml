@@ -40,7 +40,7 @@ tests:
     env:
       BASE_DOMAIN: qe.devcluster.openshift.com
       CHURN: "false"
-      COMPUTE_NODE_REPLICAS: "24"
+      COMPUTE_NODE_REPLICAS: "3"
       GC: "false"
       ITERATION_MULTIPLIER_ENV: "9"
       ZONES_COUNT: "3"
