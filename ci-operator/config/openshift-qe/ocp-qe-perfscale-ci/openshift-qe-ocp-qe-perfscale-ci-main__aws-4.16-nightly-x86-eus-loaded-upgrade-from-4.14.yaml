@@ -23,8 +23,8 @@ resources:
       cpu: 100m
       memory: 200Mi
 tests:
-- as: loaded-upgrade-eus-aws-ovn-ipsec-414to416-24nodes
-  cron: 0 8 3 * *
+- always_run: false
+  as: loaded-upgrade-eus-414to416-24nodes
   steps:
     allow_skip_on_success: true
     cluster_profile: aws-perfscale-qe
@@ -54,8 +54,8 @@ tests:
     - chain: openshift-qe-cluster-density-v2
     workflow: openshift-qe-upgrade
   timeout: 8h0m0s
-- as: loaded-upgrade-eus-414to416-120nodes
-  cron: 0 8 3 * *
+- always_run: false
+  as: loaded-upgrade-eus-414to416-120nodes
   steps:
     allow_skip_on_success: true
     cluster_profile: aws-perfscale
